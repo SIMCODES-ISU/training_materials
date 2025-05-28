@@ -1,7 +1,9 @@
 Intro to Machine Learning.pptx
 - Introduction to ML, including logistic regression and hierarchical clustering.
+  
 Neural Networks and Deep learning.pptx
 - Introduction to deep learning.
+  
 ML_basics.ipynb
 - Example code for basic string operations
 - Example code for sklearn

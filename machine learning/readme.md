@@ -7,6 +7,6 @@ ML_basics.ipynb
 - Example code for sklearn
 - Example code for BERT model
 
-
 Nova instruction video: https://grandview-edu.zoom.us/rec/play/oYD5tClopYzSxKue20s6N2MBBWHj2YBZsY8qn81EfTEbqS-nNJg13wm04xDI0kBmmOlkXNVSHGuw8hwr.jNeij1Htfjbgl_qC
+
 Nova OnDemand tutorial

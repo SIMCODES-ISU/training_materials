@@ -11,4 +11,5 @@ ML_basics.ipynb
 
 Nova instruction video: https://grandview-edu.zoom.us/rec/play/oYD5tClopYzSxKue20s6N2MBBWHj2YBZsY8qn81EfTEbqS-nNJg13wm04xDI0kBmmOlkXNVSHGuw8hwr.jNeij1Htfjbgl_qC
 
-Nova OnDemand tutorial
+Nova OnDemand Turorial.pdf
+- Nova OnDemand tutorial

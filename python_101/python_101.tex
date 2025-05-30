@@ -1,0 +1,517 @@
+\input{BeamerSettings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\tiny,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    xleftmargin=0.05\textwidth,
+    xrightmargin=0.45\textwidth	
+}
+
+\newcommand{\inlinecode}[1]{\colorbox{backcolour}{\lstinline{#1}}}
+
+\lstset{style=mystyle}
+
+\author[RMR]{\textbf{Ryan~M.~Richard}}
+\title[Python101]{Python Practice Session}
+\institute[Ames]{
+	Scientist II and Adjunct Assistant Professor of Chemistry\\
+	Ames National Laboratory and Iowa State University\\
+	Ames, IA, USA
+} 
+
+\date[5-30-2025]{2025 SIMCODES Bootcamp}
+
+\begin{document}
+\TitleSlide
+
+\TwoColumnSlide{Objectives}
+{\BulletList{
+	\item Understand the basics of Python software.
+	\item Write a Python package for the Fibonacci sequence.
+}}
+{}
+{}
+
+\defverbatim[colored]\listOne{
+\begin{lstlisting}[language=python]
+# This is a comment. 
+# It gives the reader context.
+print('hello world')
+for i in [1, 2, 3]:
+    print(i)
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Notes on Writing Python}
+{\BulletList{
+	\item Case-sensitive, e.g., \texttt{Print} is not the same as \texttt{print}
+	\item Leading spaces are significant (and should always be spaces, \textbf{NOT} tabs).
+	\begin{itemize}
+		\item The number of spaces is up to you, but you should be consistent.
+		\item e.g., if you choose to indent two spaces, you should always use two space.
+	\end{itemize}
+	\item The type of brackets, braces, etc. are significant.
+}}
+{
+\listOne
+}
+{}
+
+\TwoColumnSlide{What is a Notebook?}
+{\BulletList{
+	\item Examples are Colab and Jupyter.
+	\item Notebooks are single files (\texttt{*.ipynb} extensions).
+	\item Notebooks are designed for singe use.
+	\begin{itemize}
+		\item E.g., tutorials, data analysis, rapid prototyping.  
+	\end{itemize}
+	\item NOT intended for reuse, or further development.
+	\begin{itemize}
+		\item Can force it if you really want to...
+	\end{itemize} 
+}}
+{
+}
+
+\TwoColumnSlide{What is a Module?}
+{
+\BulletList{
+	\item Python software has three flavors: modules, packages, and libraries.
+	\item A module is a single \texttt{*.py} file.
+	\item Modules are building blocks of packages and libraries.
+	\item All the actual effort goes into writing modules.
+}}
+{}
+{}
+
+
+\TwoColumnSlide{What is a Package?}
+{\BulletList{
+        \item Packages are modules distributed together.
+	\item Directory, \texttt{\_\_init\_\_.py} file, and \texttt{*.py} files.
+	\item Name of the directory will be the name of the package.
+	\item The \texttt{\_\_init\_\_.py} file is usually empty, but is essential because
+	         that's how Python determines your directory is a package.
+	\item The \texttt{*.py} files are plain text and are where you put the code. 
+}}
+{
+}
+{}
+
+\TwoColumnSlide{What is a Library?}
+{\BulletList{
+	\item Libraries are packages that are distributed together.
+	\item Libraries are usually distributed individually so the
+	        terms stop here.
+	\item We won't worry about how to develop a library.
+}}
+{}
+{}
+
+\TwoColumnSlide{What is a project?}
+{\BulletList{
+	\item Disclaimer, may not be a standardized term.
+	\item Modules, packages, and libraries are ``just the code.''
+	\item Good software also ``infrastructure'', e.g., documentation, tests, etc.
+	\item We call everything together the ``project.''
+}}
+{}
+{}
+
+\TwoColumnSlide{Fibonacci Sequence}
+{\BulletList{
+	\item 0, 1, 1, 2, 3, 5, 8, $\ldots$
+	\item $F_i = F_{i-2} + F_{i-1}$
+	\item Our goal: write a package for computing $F_i$.
+}}
+{}
+{}
+
+\TwoColumnSlide{Setup: Project Structure}
+{\BulletList{
+	\item<1-> Let's call our project \texttt{Fibby}
+	\item<1-> In terminal, start by making a directory called \texttt{fibby}.
+	\begin{itemize}
+		\item<1-> Note it is lowercase to avoid file system gotchas.	
+	\end{itemize}
+	\item<1-> What is the terminal command for creating \texttt{fibby}?
+	\begin{itemize}
+		\item<2-> \inlinecode{mkdir fibby}
+	\end{itemize}
+	\item<3> All of our project files will live inside this directory.
+	\item<3> Practice: add \texttt{fibby/README.md} with contents:
+	        \inlinecode{Welcome to Fibby!}
+	\item<3> N.b., paths for this tutorial are given relative to the first \texttt{fibby}
+	               directory you made.
+}}
+{}
+{}
+
+\TwoColumnSlide{Setup: Package Structure}
+{\BulletList{
+	\item Within a project, Python modules are separated from infrastructure.
+	\item Python modules for a package are stored in a single directory.
+	\item Python uses the directory name as the name of the package.
+	\item Unfortunately this leads to a very common pattern where the name of
+	         the project and the name of the package are the same.
+	\item I.e., add a directory \texttt{fibby/fibby}
+}}
+{}
+{}
+
+\TwoColumnSlide{Setup: Making \texttt{fibby} a Package}
+{\BulletList{
+	\item<1-> Python doesn't know \texttt{fibby/fibby} is a package.
+	\item<1-> How do we tell Python that \texttt{fibby} is a package?
+	\begin{itemize}
+		\item<2> Add a file \texttt{\_\_init\_\_.py} to \texttt{fibby/fibby}.
+	\end{itemize}
+}}
+{}
+{}
+
+\defverbatim[colored]\listTwo{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    if i == 0:
+        return 0
+    if i == 1:
+        return 1
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Setup: Making the \texttt{fibby} Module}
+{\BulletList{
+	\item Create a file \texttt{fibby/fibby/fibonacci.py}.
+	\item For now, just worry about computing $F_0=0$ and $F_1=1$.
+	\item Write a function which takes $i$ and returns $F_i$.
+}}
+{
+\only<2>{\listTwo}
+}
+{}
+
+\TwoColumnSlide{Does Fibby work?}
+{\BulletList{
+	\item<1> What is the command to run Fibby?
+	\begin{itemize}
+		\item<2> \inlinecode{python3 fibonacci.py}
+		\item<2> \inlinecode{python3 fibonacci.py 0}
+		\item<2> \inlinecode{python3 fibonacci.py 1}
+	\end{itemize}
+	\item<3> This was a trick question. We only \textbf{defined} a function \texttt{fibonacci}.
+	                We never called it.
+	\item<3> Very common error...
+}}
+{}
+{}
+
+
+\defverbatim[colored]\listThree{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    if i == 0:
+        return 0
+    if i == 1:
+        return 1
+ 
+
+fibonacci(0)
+\end{lstlisting}
+}
+
+\defverbatim[colored]\listFour{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    if i == 0:
+        return 0
+    if i == 1:
+        return 1
+ 
+
+print(fibonacci(0))
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Calling Fibby.}
+{\BulletList{
+	\item<1> Add a call to \texttt{fibonacci}.
+	\item<1> Now how do we run it?
+	\begin{itemize}
+		\item<2> \inlinecode{python3 fibonacci.py}
+	\end{itemize}
+	\item<3> This was a trick question. We called the function, but didn't \textbf{print} the value.
+	\item<3> Again common error. Remember computers do \textbf{exactly} what you ask them
+	               to do.
+	\item<4> Correct code.
+	\item<4> How would we print $F_1$?
+}}
+{
+\only<1-3>{\listThree}
+\only<4>{\listFour}
+}
+{}
+
+\defverbatim[colored]\listFour{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    if i == 0:
+        return 0
+    if i == 1:
+        return 1
+\end{lstlisting}
+}
+
+
+\TwoColumnSlide{Development Notes}
+{\BulletList{
+	\item When you develop software you typically don't call your function, class, etc. in the module
+	         you define it in.
+	\item We did this just as a ``sanity check.''
+	\item Want to ``separate concerns.'' 
+	\item (Go ahead and delete the \inlinecode{print(fibonacci(0))} line).
+	\item Modern software development is test-driven. So lets write a test.          
+}}
+{
+\listFour
+}
+{}
+
+\defverbatim[colored]\listFive{
+\begin{lstlisting}[language=python]
+from fibby.fibonacci import fibonacci
+
+assert fibonacci(0) == 0
+assert fibonacci(1) == 1
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Testing Fibby}
+{\BulletList{
+	\item Create \texttt{fibby/tests}
+	\item Create \texttt{fibby/tests/\_\_init\_\_.py}
+	\item Create {\small \texttt{fibby/tests/test\_fibonacci.py}}
+	\item Run: \inlinecode{pytest} in \texttt{fibby} directory.
+	\item At this point
+}}	
+{
+\listFive
+}
+{}
+
+\defverbatim[colored]\listSix{
+\begin{lstlisting}[language=python]
+# Project Structure
+# project_name/
+# |--- package_name/
+# |    |---__init__.py
+# |    |---module1_name.py
+# |    |---module2_name.py
+# |--- tests/
+# |    |--- __init__.py
+# |    |--- test_module1_name.py
+# |    |--- test_module2_name.py
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Notes on Structure}
+{\BulletList{
+	\item We now have a bare-bones Python project.
+	\item There's actually theory behind why projects are set up this way.
+	\item If you try to get creative you will likely run into import errors.
+	\item Until you are a Python expert, just stick with this pattern.
+}}
+{
+\listSix
+}
+{}
+
+\defverbatim[colored]\listSeven{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    seq = [0, 1]
+    
+    while len(seq) <= i:
+        seq.append(seq[-2] + seq[-1])
+        
+    return seq[i]
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Towards Arbitrary $F_i$}
+{\BulletList{
+	\item Our code only works for $i\le 1$.
+	\item Let's generalize it.
+	\item Many possible implementations.
+	\item General tip: get something that works first.
+	\item Easy implementation: fill a list.
+}}
+{
+\only<2>{\listSeven}
+}
+{}
+
+\TwoColumnSlide{Performance}
+{\BulletList{
+	\item<1-> Our implementation is not optimal.
+	\item<1-> How bad do you think it is?
+	\item<1-> Try asking for $F_{10}=55$
+	\item<2-> $F_{54}=86267571272$
+	\item<3-> $F_{502}=365014740723634211012237077$
+	               $906479355996081581501455497$
+	               $852747829366800199361550174$
+	               $096573645929019489792751$
+	\item<4-> $F_{5008}=182\cdots$
+	\item<5-> $F_{25000}=???$ (string conversion error)
+}}
+{}
+{}
+
+\TwoColumnSlide{Performance: Lesson}
+{\BulletList{
+	\item Pro tip: do NOT pre-maturely optimize your code.
+	\item Our naive Fibonacci code can compute $F_{25000}$ in under a second!
+	\item Code readability/maintainability should be the priority for the first pass.
+	\item Only start optimizing code when it becomes a bottleneck.
+}}
+{}
+{}
+
+\defverbatim[colored]\listSeven{
+\begin{lstlisting}[language=python]
+def fibonacci(i):
+    '''
+    This is a summary line. It should be 
+    about a sentence long.
+    
+    This is the extended description. 
+    Note that the entire docstring is 
+    indented as far as the quotes we used.
+    
+    Parameters
+    ----------
+    i : int
+       Which fibonacci number you want. 
+       i == 0 is 0. i == 1 is 1. 
+       i == 2 is 1. i == 3 is 2. Etc.
+    
+    Returns
+    -------
+    int
+        The requested fibonacci number
+    '''
+    
+    # Code would go here
+\end{lstlisting}
+}
+
+\TwoColumnSlide{Documentation}
+{\BulletList{
+	\item I recommend adding documentation as the last step before a PR.
+	\begin{itemize}
+		\item If you add it too early, you'll often find that you need to change it because
+		         you added/removed a parameter, changed the type of a parameter, etc.
+	\end{itemize}
+	\item In Python we document functions with ``docstrings''.
+	\item Docstrings are free-form, but in science we usually follow ``numpydoc'' style.
+	\begin{itemize}
+		\item \url{https://www.geeksforgeeks.org/python-docstrings/}
+	\end{itemize}
+	
+}}
+{
+\listSeven
+}
+{}
+
+
+\TwoColumnSlide{Generalizing}
+{\BulletList{
+	\item While real-world problems are harder, they're tackled basically the same way.
+         \item Write code units (e.g., function, class, libraries) for each task.
+         \item Test the code units as you write them.
+         \item If code unit gets too big, split it.
+         \item Document before committing.
+}}
+{}
+{}
+
+\TwoColumnSlide{Misc.}
+{\BulletList{
+	\item Software engineering is ultimately a soft science.
+	\item Should this be a function? A class? A library? Subjective.
+	\item Ultimately, any solution that gets the right answer 
+	         (for the right reasons) is ``correct''.
+	\item Easier to test small code units. I recommend erring on the
+	         side of too small, rather than too large.
+	\item A lot like ``showing your work'' in math. Each code unit shows
+	         a step. 
+	\item As you get more comfortable you can start ``skipping steps.''
+}}
+{}
+{}
+
+\TwoColumnSlide{Debugging}
+{\BulletList{
+	\item In practice, most of coding is debugging.
+	\item Something you get better at with practice.
+	\item Need to trace the logic of the program and see where if fails.
+	\item Usually introduced through \inlinecode{print} statements.
+	\begin{itemize}
+		\item Basically print values until you find the first one that
+		         is wrong.
+	\end{itemize}
+	\item Tools called ``debuggers'' that can do this (and more) for
+	         you.
+}}
+{}
+{}
+
+\TwoColumnSlide{Practice}
+{\BulletList{
+	\item Fibonacci sequence prototypical example of recursion.
+	\begin{itemize}
+		\item Recursion: Function \texttt{fibonacci} calls itself.
+	\end{itemize}
+	\item Goal: write the call for $F_i$ in terms of the calls for
+	         $F_{i-2}$ and $F_{i-1}$.
+	\item Hint: in terminal \texttt{ctrl + c} kills the current running
+	         process.
+	\begin{itemize}
+		\item Common recursion problem is running forever because
+		         function just keeps calling itself.
+	\end{itemize}
+}}
+{}
+{}
+
+\TwoColumnSlide{Acknowledgements}
+{\BulletList{
+	\item NSF for funding the REU.
+	\item ISU and Ames National Lab
+}}
+{
+	\AddPicture{nsf.jpg}
+}
+{}
+
+\end{document}

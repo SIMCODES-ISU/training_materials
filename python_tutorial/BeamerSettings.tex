@@ -1,0 +1,146 @@
+\documentclass[11pt]{beamer}
+\usetheme{Boadilla}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{lmodern}
+\usepackage{listings}
+\usepackage[absolute,overlay]{textpos}
+\usepackage[export]{adjustbox}
+
+\usepackage{epigraph} %For quote 
+\usepackage{hyperref} %Colors set below to use Ames/ISU colors
+
+%%%%%%%%%%%Beamer Settings and Macros %%%%%%%%%%%%%%%
+%Turn-off the stupid symbols at the bottom
+\setbeamertemplate{navigation symbols}{}
+
+%%% Font sizes
+\setbeamerfont{itemize/enumerate body}{size=\normalsize}
+\setbeamerfont{itemize/enumerate subbody}{size=\small}
+\setbeamerfont{itemize/enumerate subsubbody}{size=\footnotesize}
+
+%Iowa State Red and Gol
+\definecolor{ISURed}{RGB}{200, 16, 46}
+\definecolor{ISUGold}{RGB}{241, 190, 72}
+\definecolor{ISUBrown}{RGB}{82,71,39}
+
+%\setbeamercolor{structure}{fg=ISURed}
+%\setbeamercolor{title}{fg=ISUBrown}
+%\setbeamercolor{frametitle}{fg=ISUBrown}
+%\setbeamercolor{palette primary}{use=structure,fg=ISUGold,bg=ISURed}
+%\setbeamercolor{palette secondary}{fg=ISURed,bg=ISUGold}
+%\setbeamercolor{palette tertiary}{fg=ISUGold,bg=ISURed} 
+%\setbeamercolor{item projected}{fg=ISUGold}
+
+%Ames Lab Blues
+\definecolor{AmesBlue1}{RGB}{33, 71, 118}
+\definecolor{AmesBlue2}{RGB}{197, 219, 240}
+\definecolor{AmesBlue3}{RGB}{214, 224, 236}
+
+\setbeamercolor{structure}{fg=AmesBlue1}
+\setbeamercolor{title}{fg=AmesBlue2,bg=AmesBlue1}
+\setbeamercolor{frametitle}{fg=AmesBlue2,bg=AmesBlue1}
+\setbeamercolor{palette primary}{use=structure,fg=AmesBlue2,bg=AmesBlue1}
+\setbeamercolor{palette secondary}{fg=AmesBlue1,bg=AmesBlue2}
+\setbeamercolor{palette tertiary}{fg=AmesBlue2,bg=AmesBlue1} 
+\setbeamercolor{item projected}{fg=AmesBlue2}
+
+\hypersetup{colorlinks=true, urlcolor=AmesBlue1, linkcolor=AmesBlue1}
+%Switch colors 
+
+
+%Make points you haven't shown invisible, and the ones you have grayed out
+\setbeamercovered{invisible}
+\setbeamercovered{again covered={\opaqueness<1->{50}}}
+
+%Load the settings for making the citation footnotes
+\setbeamerfont{footnote}{size=\tiny}
+\usepackage[numbers]{natbib}
+\usepackage{bibentry}
+\bibliographystyle{abbrv}
+
+%Makes the title slide
+\newcommand{\TitleSlide}{
+\begin{frame}
+\titlepage
+\end{frame}
+}
+
+\newcommand{\BulletList}[1]{
+	\begin{block}{}
+		\begin{itemize}
+			#1
+		\end{itemize}
+	\end{block}	
+}
+
+%A two-column slide, where arg1 is the title, arg2 is
+%column one, arg3 is column two, and arg4 is a footer
+\newcommand{\TwoColumnSlide}[4]{
+\begin{frame}[squeeze]{#1}
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\begin{columns}[c,t, totalwidth=1.0\textwidth]
+\begin{column}[c]{0.49\linewidth}
+#2
+\end{column}
+\begin{column}[c]{0.49\linewidth}
+
+#3
+
+\end{column}
+\end{columns}
+
+#4
+
+\end{frame}}
+
+\newcommand{\TwoRowSlide}[4]{
+\begin{frame}[squeeze]{#1}
+\setlength{\leftmargini}{0.5cm}
+\setlength{\leftmarginii}{0.5cm}
+\begin{minipage}[c][0.49\textheight][c]{0.9\textwidth}
+\begin{center}
+#2
+\end{center}
+\end{minipage}
+
+\begin{minipage}[c][0.49\textheight][c]{0.9\textwidth}
+\begin{center}
+#3
+\end{center}
+\end{minipage}
+#4
+\end{frame}}
+
+
+%Adds a picture, with the path given as arg1, to a slide, respecting the sizes of the environment and not distorting the picture.  Also works with Beamer's overlays
+\newcommand<>{\AddPicture}[1]{
+\begin{center}
+\includegraphics#2[width=0.90\textwidth,height=0.95\textheight,keepaspectratio]{#1}
+\end{center}
+} 
+
+% Starts the backup slides
+\newcommand{\BackupBegin}{
+	\newcounter{finalframe}
+	\setcounter{finalframe}{\value{framenumber}}
+}
+
+% Ends the backup slides
+\newcommand{\BackupEnd}{
+	\setcounter{framenumber}{\value{finalframe}}
+}
+
+%%%%%%%%%%%%%%%%%%% End Macros and Stuff %%%%%%%%%%%%%%
+
+\AtBeginSection[]{
+	\begin{frame}
+		\vfill
+		\centering
+		\begin{beamercolorbox}[sep=8pt,center,shadow=true,rounded=true]{title}
+			\usebeamerfont{title}\insertsectionhead\par%
+		\end{beamercolorbox}
+		\vfill
+	\end{frame}
+}
